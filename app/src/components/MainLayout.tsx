@@ -10,7 +10,7 @@ const MainLayout: React.FC = () => {
         <>
             <Navbar />
             <div style={{
-                marginTop: '64px',
+                marginTop: '16px',
                 padding: '16px',
                 backgroundColor: theme.palette.background.default,
                 color: theme.palette.text.primary
