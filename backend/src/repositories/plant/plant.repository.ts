@@ -2,7 +2,8 @@ import { Plant } from '../../entities/Plant';
 import { plants } from '../../mockData/plants';
 import { PlantCreate, PlantUpdate } from "./plant.types";
 import { Result } from '@badrap/result';
-import {PlantError} from "../plant/plant.errors"
+import {PlantError} from "./plant.errors";
+import {users} from "../../mockData/users";
 
 class PlantRepository {
     private plants: Plant[];
@@ -84,6 +85,18 @@ class PlantRepository {
             return Result.ok(totalPages);
         } catch (error) {
             return Result.err(PlantError.DatabaseReadError('Failed to count'));
+        }
+    }
+
+    getUserEmailById(userId: number): Result<string | undefined> {
+        try {
+            const userData = users.find(user => user.id === userId);
+            if (!userData) {
+                return Result.err(PlantError.DatabaseReadError('User for the plant not found.'));
+            }
+            return Result.ok(userData.email);
+        } catch (error) {
+            return Result.err(PlantError.DatabaseReadError('User for the plant not found.'));
         }
     }
 }
