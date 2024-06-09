@@ -4,6 +4,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useAllPlants } from '../hooks/usePlants';
 import { useNavigate } from 'react-router-dom';
+import flowerImage from '../assets/flower.png';
+
 
 const PlantsSwipePage: React.FC = () => {
     const { data: plantsResp, isFetching } = useAllPlants();
@@ -12,7 +14,12 @@ const PlantsSwipePage: React.FC = () => {
 
     if (isFetching || !plantsResp) {
         return (
-            <Box display="flex" justifyContent="center" marginTop={4}>
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                height="100vh"
+            >
                 <CircularProgress />
             </Box>
         );
@@ -29,10 +36,22 @@ const PlantsSwipePage: React.FC = () => {
     const currentPlant = plantsResp[currentPlantIndex];
 
     return (
-        <Container style={{ paddingTop: '20px', paddingBottom: '20px', margin: 0, width: '100%' }}>
+        <Container
+            style={{
+                paddingTop: '20px',
+                paddingBottom: '20px',
+                margin: 0,
+                marginLeft: '200px',
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center', // Align content horizontally to the center
+                alignItems: 'center', // Align content vertically to the center
+                minHeight: '100vh', // Ensure the Container takes the full height of the viewport
+            }}
+        >
             <Box display="flex" flexDirection="row">
                 <Box flex={1} display="flex" flexDirection="column" alignItems="center">
-                    <img src={currentPlant.photoUrl} alt={currentPlant.name} style={{ width: '100%', maxWidth: '300px' }} />
+                    <img src={flowerImage} alt={currentPlant.name} style={{ width: '100%', maxWidth: '300px' }} />
                     <Box display="flex" justifyContent="space-between" width="100%" marginTop={2}>
                         <Button onClick={handleNextPlant}>
                             <ArrowBackIcon />
