@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import { plantRepository } from '../repositories/plant/plant.repository';
+import { PlantCreateSchema, PlantUpdateSchema } from '../validationSchemas/plant.schema';
+import { parseRequest } from '../utils';
 
 export const getAllPlants = (req: Request, res: Response) => {
     const plants = plantRepository.getAllPlants();
@@ -15,15 +17,19 @@ export const getPlantById = (req: Request, res: Response) => {
     res.json(plant);
 };
 
-export const createPlant = (req: Request, res: Response) => {
-    const newPlant = req.body;
+export const createPlant = async (req: Request, res: Response) => {
+    const newPlant = await parseRequest(PlantCreateSchema, req, res);
+    if (!newPlant) return;
+
     const createdPlant = plantRepository.createPlant(newPlant);
     res.status(201).json(createdPlant);
 };
 
-export const updatePlant = (req: Request, res: Response) => {
+export const updatePlant = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id, 10);
-    const updatedPlant = req.body;
+    const updatedPlant = await parseRequest(PlantUpdateSchema, req, res);
+    if (!updatedPlant) return;
+
     const plant = plantRepository.updatePlant(id, updatedPlant);
     if (!plant) {
         return res.status(404).send('Plant not found');
