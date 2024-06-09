@@ -22,6 +22,9 @@ class MatchRepository {
         return newMatch;
     }
 
+    getMatchById(id: number): Match | undefined {
+        return this.matches.find(match => match.id === id);
+    }
 }
 
 export const matchRepository = new MatchRepository();

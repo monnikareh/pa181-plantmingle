@@ -1,4 +1,3 @@
-// src/routers/plant.router.ts
 import { Router } from 'express';
 import {
     getAllPlants,
