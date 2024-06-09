@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { plantRepository } from '../repositories/plant.repository';
+import { plantRepository } from '../repositories/plant/plant.repository';
 
 export const getAllPlants = (req: Request, res: Response) => {
     const plants = plantRepository.getAllPlants();
