@@ -8,6 +8,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 const PlantTable: React.FC<any> = ({ data }) => {
+    console.log('Data in PlantTable:', data); // Log the data
+
     return (
         <TableContainer component={Paper}>
             <Table>

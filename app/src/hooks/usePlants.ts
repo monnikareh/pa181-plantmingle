@@ -1,23 +1,16 @@
 import PlantsApi from '../api/plantsApi';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 
-
-export const usePlants = () => {
+export const useAllPlants = () => {
     const { data, isFetching } = useQuery({
         queryKey: ['plants'],
-        queryFn: () => { return PlantsApi.getAll()}
+        queryFn: () => {return PlantsApi.getAll() }
     });
+
+    console.log('Data from API:', data);
+
     return { data, isFetching };
 };
-
-export const usePlantsPaginated = (page: number) => {
-    const { data, isFetching } = useQuery({
-        queryKey: ['plants', page],
-        queryFn: () => { return PlantsApi.getAllPaginated(page)}
-    });
-    return { data, isFetching };
-}
-
 
 export const usePlantCreate = () => {
     const queryClient = useQueryClient();
@@ -25,9 +18,10 @@ export const usePlantCreate = () => {
     const { mutateAsync } = useMutation({
         mutationFn: (payload: any) => PlantsApi.createSingle(payload),
         onSuccess: () => {
-            queryClient.refetchQueries({ queryKey: ['plants'] });
+            queryClient.refetchQueries({ queryKey: ['allPlants'] });
         }
     });
+
     return { mutateAsync };
 };
 
@@ -37,20 +31,22 @@ export const usePlantEdit = (id: number) => {
     const { mutateAsync } = useMutation({
         mutationFn: (payload: any) => PlantsApi.updateSingle(id, payload),
         onSuccess: () => {
-            queryClient.refetchQueries({ queryKey: ['plants'] });
+            queryClient.refetchQueries({ queryKey: ['allPlants'] });
         }
     });
+
     return { mutateAsync };
 };
-
 
 export const usePlantDelete = (id: number) => {
     const queryClient = useQueryClient();
 
-    return useMutation({
+    const { mutateAsync } = useMutation({
         mutationFn: () => PlantsApi.deleteSingle(id),
         onSuccess: () => {
-            queryClient.refetchQueries({ queryKey: ['plants'] });
+            queryClient.refetchQueries({ queryKey: ['allPlants'] });
         }
     });
+
+    return { mutateAsync };
 };

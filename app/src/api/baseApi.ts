@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { ApiRespSingle, ApiRespMulti, ApiRespMultiPaginated } from "../models/response.ts";
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:3001",
+    baseURL: "http://localhost:3000",
 });
 
 async function getAll<T>(path: string, config?: AxiosRequestConfig) {
