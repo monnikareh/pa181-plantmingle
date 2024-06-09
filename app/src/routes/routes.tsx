@@ -3,6 +3,7 @@ import FrontPage from '../pages/FrontPage';
 import ListPlantsPage from '../pages/ListPlantsPage';
 import MainLayout from '../components/MainLayout';
 import PlantsSwipePage from "../pages/PlantsSwipePage";
+import MatchPage from "../pages/MatchPage.tsx";
 
 const mainLayoutRoutes: RouteObject[] = [
   {
@@ -20,6 +21,10 @@ const mainLayoutRoutes: RouteObject[] = [
   {
     path: 'swipe',
     element: <PlantsSwipePage />,
+  },
+  {
+    path: 'match',
+    element: <MatchPage />,
   },
   {
     path: 'plants/:id',

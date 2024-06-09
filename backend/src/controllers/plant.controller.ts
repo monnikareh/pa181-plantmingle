@@ -71,3 +71,13 @@ export const deletePlant = (req: Request, res: Response) => {
     }
     res.status(204).send();
 };
+
+export const getUserEmailById = (req: Request, res: Response) => {
+    const userId = parseInt(req.params.id, 10);
+    const userEmailResult = plantRepository.getUserEmailById(userId);
+    if (userEmailResult.isErr) {
+        return res.status(500).json({ error: userEmailResult.error });
+    }
+    const userEmail = userEmailResult.value;
+    return res.json({ email: userEmail });
+};
