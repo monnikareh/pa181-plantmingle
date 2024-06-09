@@ -1,0 +1,31 @@
+# How to run this code
+1. Download your favorite IDE (I recommend Webstorm).
+2. Clone this repository
+```bash
+git clone https://github.com/monnikareh/pa181-plantmingle.git
+```
+
+# BACKEND
+### How to run BE:
+
+```bash
+cd backend
+npm install
+npm run start
+```
+
+# FRONTEND
+### How to run FE:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+
+    
+
+    
+
+
