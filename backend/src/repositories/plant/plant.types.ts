@@ -7,8 +7,8 @@ export type PlantCreate = {
 }
 
 export type PlantUpdate = {
-    name: string,
+    name?: string,
     description?: string,
     careInstructions?: string,
-    photoUrl: string,
+    photoUrl?: string,
 }

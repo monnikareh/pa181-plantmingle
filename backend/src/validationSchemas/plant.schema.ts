@@ -9,8 +9,8 @@ export const PlantCreateSchema = z.object({
 });
 
 export const PlantUpdateSchema = z.object({
-    name: z.string(),
+    name: z.string().optional(),
     description: z.string().optional(),
     careInstructions: z.string().optional(),
-    photoUrl: z.string().url()
+    photoUrl: z.string().url().optional()
 });
