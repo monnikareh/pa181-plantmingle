@@ -1,4 +1,12 @@
 # How to run this code
+### Prerequisites 
+- git
+- IDE (Webstorm or Visual Studio Code)
+- Linux/WSL for Windows 
+- nvm https://github.com/nvm-sh/nvm#installing-and-updating
+- everything else should be installed after running npm install
+
+### How to download this code
 1. Download your favorite IDE (I recommend Webstorm).
 2. Clone this repository
 ```bash
