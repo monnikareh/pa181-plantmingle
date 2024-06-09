@@ -1,29 +1,30 @@
 import BaseApi from "./baseApi";
+import {Plant} from "../../../backend/src/entities/Plant.ts";
 
 const PLANTS_PREFIX = "/plants";
 
 async function getSingle(id: number) {
-    return BaseApi.getSingle<any>(`${PLANTS_PREFIX}/${id}`);
+    return BaseApi.getSingle<Plant>(`${PLANTS_PREFIX}/${id}`);
 }
 
-async function getAll() {
-    return BaseApi.getAll<any>(`${PLANTS_PREFIX}`);
+async function getAll(): Promise<Plant[]> {
+    return BaseApi.getAll<Plant>(PLANTS_PREFIX);
 }
 
 async function getAllPaginated(page: number) {
-    return BaseApi.getAllPaginated<any>(`${PLANTS_PREFIX}?page=${page}`);
+    return BaseApi.getAllPaginated<Plant>(`${PLANTS_PREFIX}?page=${page}`);
 }
 
 async function createSingle(payload: any) {
-    return BaseApi.postSingle<any>(PLANTS_PREFIX, payload);
+    return BaseApi.postSingle<Plant>(PLANTS_PREFIX, payload);
 }
 
 async function updateSingle(id: number, payload: any) {
-    return BaseApi.putSingle<any>(`${PLANTS_PREFIX}/${id}`, payload);
+    return BaseApi.putSingle<Plant>(`${PLANTS_PREFIX}/${id}`, payload);
 }
 
 async function deleteSingle(id: number) {
-    return BaseApi.deleteSingle<any>(`${PLANTS_PREFIX}/${id}`);
+    return BaseApi.deleteSingle<Plant>(`${PLANTS_PREFIX}/${id}`);
 }
 
 const PlantsApi = {

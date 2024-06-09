@@ -2,6 +2,7 @@ import { Navigate, RouteObject } from 'react-router-dom';
 import FrontPage from '../pages/FrontPage';
 import ListPlantsPage from '../pages/ListPlantsPage';
 import MainLayout from '../components/MainLayout';
+import PlantsSwipePage from "../pages/PlantsSwipePage";
 
 const mainLayoutRoutes: RouteObject[] = [
   {
@@ -14,6 +15,14 @@ const mainLayoutRoutes: RouteObject[] = [
   },
   {
     path: 'plants',
+    element: <ListPlantsPage />,
+  },
+  {
+    path: 'swipe',
+    element: <PlantsSwipePage />,
+  },
+  {
+    path: 'plants/:id',
     element: <ListPlantsPage />,
   },
 ];
