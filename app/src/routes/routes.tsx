@@ -1,5 +1,6 @@
 import { Navigate, RouteObject } from 'react-router-dom';
 import FrontPage from '../pages/FrontPage';
+import ListPlantsPage from '../pages/ListPlantsPage';
 import MainLayout from '../components/MainLayout';
 
 const mainLayoutRoutes: RouteObject[] = [
@@ -10,6 +11,10 @@ const mainLayoutRoutes: RouteObject[] = [
   {
     path: 'home',
     element: <FrontPage />,
+  },
+  {
+    path: 'plants',
+    element: <ListPlantsPage />,
   },
 ];
 
