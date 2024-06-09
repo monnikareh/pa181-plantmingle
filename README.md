@@ -26,7 +26,7 @@ npm run start
 ### How to run FE:
 
 ```bash
-cd frontend
+cd app
 npm install
 npm run dev
 ```
