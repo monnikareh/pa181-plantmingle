@@ -44,9 +44,9 @@ const PlantsSwipePage: React.FC = () => {
                 marginLeft: '200px',
                 width: '100%',
                 display: 'flex',
-                justifyContent: 'center', // Align content horizontally to the center
-                alignItems: 'center', // Align content vertically to the center
-                minHeight: '100vh', // Ensure the Container takes the full height of the viewport
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '100vh',
             }}
         >
             <Box display="flex" flexDirection="row">

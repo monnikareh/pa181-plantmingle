@@ -11,10 +11,6 @@ const Navbar: React.FC = () => {
                 <Typography variant="h6" component={Link} to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
                     PlantMingle
                 </Typography>
-                {/*
-                <Box style={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start', marginLeft: '20px' }}>
-                    <Button color="inherit" component={Link} to="/students">Students</Button>
-                </Box> */}
             </Toolbar>
         </AppBar>
     );
