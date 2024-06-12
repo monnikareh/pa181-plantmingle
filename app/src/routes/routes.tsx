@@ -30,6 +30,10 @@ const mainLayoutRoutes: RouteObject[] = [
     path: 'plants/:id',
     element: <ListPlantsPage />,
   },
+  {
+    path: 'swipe/:id',
+    element: <PlantsSwipePage />,
+  },
 ];
 
 const routes: RouteObject[] = [

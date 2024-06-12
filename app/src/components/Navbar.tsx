@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
     return (
-        <AppBar position="fixed">
+        <AppBar position='static'>
             <Toolbar>
                 <Typography variant="h6" component={Link} to="/" style={{ textDecoration: 'none', color: '#355e3b', fontFamily: "Jost" }}>
                     PlantMingle

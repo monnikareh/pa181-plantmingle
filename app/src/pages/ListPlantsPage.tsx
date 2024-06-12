@@ -54,22 +54,20 @@ const PlantListPage: React.FC = () => {
         <div style={{
             placeSelf: "start",
             display: "grid",
-            minHeight: "100vh",
         }}>
             <Box style={{
-                paddingTop: '40px',
                 paddingBottom: '20px',
                 margin: 0,
                 minWidth: "100px"
             }}>
-                <Box style={{paddingTop: '10px'}}>
+                <Box>
                     <Typography variant="h4" gutterBottom>Plants</Typography>
                 </Box>
                 <Box display="flex" flexDirection="column">
                     <SearchBox>
                         <InputBase
                             placeholder="Search…"
-                            inputProps={{'aria-label': 'search'}}
+                            inputProps={{'aria-label': 'search', style:{padding: "4px 15px"}}}
                             value={searchQuery}
                             onChange={handleSearchChange}
                         />
@@ -85,7 +83,6 @@ const PlantListPage: React.FC = () => {
                 maxWidth: '100%',
                 minWidth: '50vw',
                 overflowX: 'auto',
-                minHeight: '100vh'
             }}>
                 {plantsResp && !isFetching ? (
                     <PlantTable data={filteredPlants.length ? filteredPlants : plantsResp}/>

@@ -1,86 +1,108 @@
-import React, {useState} from 'react';
-import {Box, Button, CircularProgress, Container, Typography} from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import {useAllPlants} from '../hooks/usePlants';
-import {useNavigate} from 'react-router-dom';
-import flowerImage from '../assets/flower.png';
-
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Typography,
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useAllPlants } from "../hooks/usePlants";
+import { useNavigate, useParams } from "react-router-dom";
+import flowerImage from "../assets/flower.png";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const PlantsSwipePage: React.FC = () => {
-    const {data: plantsResp, isFetching} = useAllPlants();
-    const [currentPlantIndex, setCurrentPlantIndex] = useState(0);
-    const navigate = useNavigate();
+  const { data: plantsResp, isFetching } = useAllPlants();
+  const [currentPlantIndex, setCurrentPlantIndex] = useState(0);
+  const navigate = useNavigate();
+  const params = useParams();
+  const theme = useTheme();
+  const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
-    if (isFetching || !plantsResp) {
-        return (
-            <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                height="100vh"
-            >
-                <CircularProgress/>
-            </Box>
-        );
+  useEffect(() => {
+    if (params.id) {
+      const id = +params.id;
+      const foundIndex = plantsResp?.findIndex((plant) => plant.id === id) || 0;
+      setCurrentPlantIndex(foundIndex);
+    } else {
+      setCurrentPlantIndex(0);
     }
+  }, [plantsResp, params]);
 
-    const handleNextPlant = () => {
-        setCurrentPlantIndex((prevIndex) => (prevIndex + 1) % plantsResp.length);
-    };
-
-    const handleMatch = () => {
-        navigate('/match');
-    };
-
-    const currentPlant = plantsResp[currentPlantIndex];
-
+  if (isFetching || !plantsResp) {
     return (
-        <div style={{
-            width: '80vw',
-            minHeight: '100vh',
-            marginTop: '200px'
-            }}
-             >
-            <Container
-                style={{
-
-                }}
-            >
-                <Box display="grid"
-                     gridTemplateColumns="1fr 2fr"
-                     gap={4}
-                     alignItems="center"
-                     marginBottom={2}
-                >
-                    <Box>
-                        <img src={flowerImage} alt={currentPlant.name} style={{width: '100%', maxWidth: '300px'}}/>
-                    </Box>
-                    <Box>
-                        <Typography variant="h4">{currentPlant.name}</Typography>
-                        <Typography variant="body1" marginTop={2}>{currentPlant.description}</Typography>
-                        <Typography variant="h6" marginTop={4}>Care Instructions</Typography>
-                        <Typography variant="body1" marginTop={1}>{currentPlant.careInstructions}</Typography>
-                    </Box>
-                </Box>
-            </Container>
-            <Box style={{
-                position: 'fixed',
-                bottom: 20,
-                width: '80%',
-                padding: '16px',
-                display: 'flex',
-                justifyContent: 'space-between',
-            }}>
-                <Button variant="contained" color="primary" onClick={handleNextPlant}>
-                    <ArrowBackIcon/>
-                </Button>
-                <Button variant="contained" color="primary" onClick={handleMatch}>
-                    <ArrowForwardIcon/>
-                </Button>
-            </Box>
-        </div>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
+      >
+        <CircularProgress />
+      </Box>
     );
+  }
+
+  const handleNextPlant = () => {
+    const nextPlant = plantsResp[(currentPlantIndex + 1) % plantsResp.length];
+    navigate(`/swipe/${nextPlant.id}`);
+  };
+
+  const handleMatch = () => {
+    navigate("/match");
+  };
+
+  const currentPlant = plantsResp[currentPlantIndex];
+
+  return (
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Box
+        display="grid"
+        gridTemplateColumns={isSmUp ? "1fr 2fr" : "1fr"}
+        gap={4}
+        alignItems="center"
+      >
+        <Box textAlign="center">
+          <img
+            src={flowerImage}
+            alt={currentPlant.name}
+            style={{ width: "100%", maxWidth: "300px", objectFit: 'contain', maxHeight: isSmUp ? '' : '150px' }}
+          />
+        </Box>
+        <Box>
+          <Typography variant="h4">{currentPlant.name}</Typography>
+          <Typography variant="body1" marginTop={2}>
+            {currentPlant.description}
+          </Typography>
+          <Typography variant="h6" marginTop={4}>
+            Care Instructions
+          </Typography>
+          <Typography variant="body1" marginTop={1}>
+            {currentPlant.careInstructions}
+          </Typography>
+        </Box>
+      </Box>
+
+      <Box
+        style={{          
+          display: "flex",
+          justifyContent: "space-between",
+          flexShrink: 0,
+          marginTop: 'auto',
+          paddingBottom: '24px'
+        }}
+      >
+        <Button variant="contained" color="primary" onClick={handleNextPlant}>
+          <ArrowBackIcon />
+        </Button>
+        <Button variant="contained" color="primary" onClick={handleMatch}>
+          <ArrowForwardIcon />
+        </Button>
+      </Box>
+    </div>
+  );
 };
 
 export default PlantsSwipePage;

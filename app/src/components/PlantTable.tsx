@@ -1,7 +1,15 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { useNavigate } from "react-router-dom";
+
 
 const PlantTable: React.FC<any> = ({ data }) => {
+    const navigate = useNavigate();
+
+    function onRowClick(id:number) {
+        navigate(`/swipe/${id}`)
+    }
+
     return (
         <TableContainer component={Paper}>
             <Table>
@@ -14,7 +22,7 @@ const PlantTable: React.FC<any> = ({ data }) => {
                 </TableHead>
                 <TableBody>
                     {data.map((plant: any) => (
-                        <TableRow key={plant.id}>
+                        <TableRow key={plant.id} hover style={{cursor:"pointer"}} onClick={() => onRowClick(plant.id)}>
                             <TableCell>{plant.id}</TableCell>
                             <TableCell>{plant.name}</TableCell>
                             <TableCell>{plant.description}</TableCell>
