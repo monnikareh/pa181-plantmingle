@@ -8,7 +8,7 @@ const Navbar: React.FC = () => {
     return (
         <AppBar position="fixed">
             <Toolbar>
-                <Typography variant="h6" component={Link} to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Typography variant="h6" component={Link} to="/" style={{ textDecoration: 'none', color: '#355e3b', fontFamily: "Jost" }}>
                     PlantMingle
                 </Typography>
             </Toolbar>

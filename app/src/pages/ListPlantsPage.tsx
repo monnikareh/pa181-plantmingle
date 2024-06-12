@@ -1,16 +1,15 @@
-import React from 'react';
-import { Typography, Box, Button, CircularProgress, InputBase, styled } from '@mui/material';
-import { useAllPlants } from '../hooks/usePlants';
+import React, {useEffect, useState} from 'react';
+import {Box, Button, CircularProgress, InputBase, styled, Typography} from '@mui/material';
+import {useAllPlants} from '../hooks/usePlants';
 import PlantTable from "../components/PlantTable.tsx";
+import {Plant} from "../../../backend/src/entities/Plant.ts"
 
-const SearchBox = styled('div')(({ theme }) => ({
+const SearchBox = styled('div')(({theme}) => ({
     display: 'flex',
     alignItems: 'center',
     backgroundColor: '#f0f0f0',
     borderRadius: theme.shape.borderRadius,
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-    margin: '10px',
+    marginBottom: '10px',
     '&:hover': {
         backgroundColor: '#e0e0e0',
     },
@@ -23,32 +22,80 @@ const SearchBox = styled('div')(({ theme }) => ({
 }));
 
 const PlantListPage: React.FC = () => {
-    const { data: plantsResp, isFetching } = useAllPlants();
+    const {data: plantsResp, isFetching} = useAllPlants();
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredPlants, setFilteredPlants] = useState<Plant[]>([]);
+
+    useEffect(() => {
+        if (plantsResp) {
+            setFilteredPlants(
+                plantsResp.filter(plant =>
+                    plant.name.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+            );
+        }
+    }, [plantsResp, searchQuery]);
+
+    const handleSearchChange = (event: any) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const handleSearchClick = () => {
+        if (plantsResp) {
+            setFilteredPlants(
+                plantsResp.filter(plant =>
+                    plant.name.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+            );
+        }
+    };
 
     return (
-        <Box style={{ paddingTop: '0px', paddingBottom: '20px', margin: 0, width: '100%' }}>
-            <Box style={{ paddingTop: '40px', paddingBottom: '20px'}}>
-                <Typography variant="h4" gutterBottom>Plants</Typography>
+        <div style={{
+            placeSelf: "start",
+            display: "grid",
+            minHeight: "100vh",
+        }}>
+            <Box style={{
+                paddingTop: '40px',
+                paddingBottom: '20px',
+                margin: 0,
+                minWidth: "100px"
+            }}>
+                <Box style={{paddingTop: '10px'}}>
+                    <Typography variant="h4" gutterBottom>Plants</Typography>
+                </Box>
+                <Box display="flex" flexDirection="column">
+                    <SearchBox>
+                        <InputBase
+                            placeholder="Search…"
+                            inputProps={{'aria-label': 'search'}}
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                        />
+                        <Button variant="contained" color="primary" size="small" onClick={handleSearchClick}>
+                            Search
+                        </Button>
+                    </SearchBox>
+                </Box>
             </Box>
-            <Box display="flex" flexDirection="column">
-                <SearchBox>
-                    <InputBase
-                        placeholder="Search…"
-                        inputProps={{ 'aria-label': 'search' }}
-                    />
-                    <Button variant="contained" color="primary" size="small">Search</Button>
-                </SearchBox>
-            </Box>
-            <Box style={{ backgroundColor: 'yellow', margin: '20px', width: '100%'}}>
+            <Box style={{
+                paddingTop: '0px',
+                paddingBottom: '20px',
+                maxWidth: '100%',
+                minWidth: '50vw',
+                overflowX: 'auto',
+                minHeight: '100vh'
+            }}>
                 {plantsResp && !isFetching ? (
-                    <PlantTable data={plantsResp} />
+                    <PlantTable data={filteredPlants.length ? filteredPlants : plantsResp}/>
                 ) : (
                     <Box display="flex" justifyContent="center" marginTop={4}>
-                        <CircularProgress />
+                        <CircularProgress/>
                     </Box>
                 )}
             </Box>
-        </Box>
+        </div>
     );
 };
 

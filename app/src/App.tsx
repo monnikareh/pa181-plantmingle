@@ -21,6 +21,26 @@ function App() {
                 secondary: '#FFFFFF',
             },
         },
+        components: {
+            MuiButton: {
+                styleOverrides: {
+                    root: {
+                        '&:hover': {
+                            color: '#ffffff'
+                        },
+                    },
+                },
+            },
+        },
+        typography: {
+            fontFamily: '"Jost", sans-serif',
+            h4: {
+                color: '#355e3b',
+            },
+            h6: {
+                color: '#355e3b',
+            },
+        },
     });
 
     return (
