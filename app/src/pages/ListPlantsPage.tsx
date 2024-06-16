@@ -28,6 +28,7 @@ const PlantListPage: React.FC = () => {
 
     useEffect(() => {
         if (plantsResp) {
+            console.log(plantsResp, searchQuery)
             setFilteredPlants(
                 plantsResp.filter(plant =>
                     plant.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -85,7 +86,7 @@ const PlantListPage: React.FC = () => {
                 overflowX: 'auto',
             }}>
                 {plantsResp && !isFetching ? (
-                    <PlantTable data={filteredPlants.length ? filteredPlants : plantsResp}/>
+                    <PlantTable data={(searchQuery) ? filteredPlants : plantsResp}/>
                 ) : (
                     <Box display="flex" justifyContent="center" marginTop={4}>
                         <CircularProgress/>
