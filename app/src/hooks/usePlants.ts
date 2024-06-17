@@ -1,6 +1,6 @@
 import PlantsApi from '../api/plantsApi';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {Plant} from "../../../backend/src/entities/Plant.ts"
+import {Plant} from "../entities/Plant.ts"
 import {useEffect, useState} from "react";
 
 export const useAllPlants = () => {

@@ -1,5 +1,5 @@
 import UserApi from '../api/userApi';
-import {User} from "../../../backend/src/entities/User.ts"
+import {User} from "../entities/User.ts"
 import {useEffect, useState} from "react";
 
 export const useAllUsers = () => {

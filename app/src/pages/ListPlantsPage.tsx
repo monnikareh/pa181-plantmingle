@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Box, Button, CircularProgress, InputBase, styled, Typography} from '@mui/material';
 import {useAllPlants} from '../hooks/usePlants';
 import PlantTable from "../components/PlantTable.tsx";
-import {Plant} from "../../../backend/src/entities/Plant.ts"
+import {Plant} from "../entities/Plant.ts"
 
 const SearchBox = styled('div')(({theme}) => ({
     display: 'flex',
