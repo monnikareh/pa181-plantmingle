@@ -1,5 +1,5 @@
 import BaseApi from "./baseApi";
-import {User} from "../../../backend/src/entities/User.ts";
+import {User} from "../entities/User.ts";
 
 const USER_PREFIX = "/users";
 

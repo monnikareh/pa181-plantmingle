@@ -1,5 +1,5 @@
 import BaseApi from "./baseApi";
-import {Plant} from "../../../backend/src/entities/Plant.ts";
+import {Plant} from "../entities/Plant.ts";
 
 const PLANTS_PREFIX = "/plants";
 
