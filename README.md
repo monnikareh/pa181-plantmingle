@@ -19,7 +19,7 @@ git clone https://github.com/monnikareh/pa181-plantmingle.git
 ```bash
 cd backend
 npm install
-npm run start
+npm start
 ```
 
 # FRONTEND
