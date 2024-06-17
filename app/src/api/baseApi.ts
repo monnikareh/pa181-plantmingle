@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: import.meta.env.VITE_FRONTEND_BASE_URL as string,
 });
 
 async function getAll<T>(path: string, config?: AxiosRequestConfig) {
