@@ -1,5 +1,5 @@
 import { PrismaClient, Match } from '@prisma/client';
-import prisma from '../../../client';
+import prisma from '../../client';
 import { Result } from '@badrap/result';
 import { MatchError } from './match.errors';
 

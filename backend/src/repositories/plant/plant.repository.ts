@@ -1,5 +1,5 @@
 import { PrismaClient, Plant } from '@prisma/client';
-import prisma from '../../../client';
+import prisma from '../../client';
 import { PlantCreate, PlantUpdate } from './plant.types';
 import { Result } from '@badrap/result';
 import { PlantError } from './plant.errors';

@@ -1,5 +1,5 @@
 import { PrismaClient, User } from '@prisma/client';
-import prisma from '../../../client';
+import prisma from '../../client';
 import { UserCreate, UserUpdate } from './user.types';
 import { Result } from '@badrap/result';
 import { UserError } from './user.errors';
