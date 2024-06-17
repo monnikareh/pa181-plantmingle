@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: plantmingle-be-svc
+spec:
+  type: ClusterIP
+  ports:
+  - name: plantmingle-be-port
+    port: 80
+    targetPort: 3000
+  selector:
+    app: plantmingle-be

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plantmingle-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: plantmingle-fe
+  template:
+    metadata:
+      labels:
+        app: plantmingle-fe
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: plantmingle-fe
+        image: cerit.io/xrehako1/plantmingle-fe-image
+        imagePullPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        ports:
+        - containerPort: 3001
+        volumeMounts:
+          - mountPath: /var/cache/nginx
+            name: nginxvol
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "1"
+          limits:
+            memory: "2Gi"
+            cpu: "2"
+        env:
+          - name: VITE_BACKEND_BASE_URL
+            value: https://plantmingle-api.dyn.cloud.e-infra.cz
+      volumes:
+        - name: nginxvol
+          persistentVolumeClaim:
+            claimName: plantmingle-nginx-pvc
