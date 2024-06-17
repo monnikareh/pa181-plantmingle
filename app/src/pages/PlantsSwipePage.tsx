@@ -8,10 +8,16 @@ import flowerImage from "../assets/flower.png";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MobileSwiper from "../components/MobileSwiper";
+import {storage} from "../firestore";
+import {
+  getDownloadURL,
+  ref,
+} from 'firebase/storage';
 
 const PlantsSwipePage: React.FC = () => {
   const { data: plantsResp, isFetching } = useAllPlants();
   const [currentPlantIndex, setCurrentPlantIndex] = useState(0);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const navigate = useNavigate();
   const params = useParams();
   const theme = useTheme();
@@ -30,6 +36,28 @@ const PlantsSwipePage: React.FC = () => {
       setCurrentPlantIndex(0);
     }
   }, [plantsResp, params]);
+
+  useEffect(() => {
+    const fetchImageUrl = async (path: string) => {
+      try {
+        const storageRef = ref(storage, path);
+        const downloadURL = await getDownloadURL(storageRef);
+        setImageUrl(downloadURL);
+      } catch (error) {
+        console.error("Error fetching image URL:", error);
+        setImageUrl(null);
+      }
+    };
+
+    if (plantsResp && plantsResp[currentPlantIndex]) {
+      const currentPlant = plantsResp[currentPlantIndex];
+      if (currentPlant.photoUrl) {
+        fetchImageUrl(currentPlant.photoUrl);
+      } else {
+        setImageUrl(null);
+      }
+    }
+  }, [plantsResp, currentPlantIndex]);
 
   if (isFetching || !plantsResp) {
     return (
@@ -76,7 +104,7 @@ const PlantsSwipePage: React.FC = () => {
         >
           <Box textAlign="center">
             <img
-              src={flowerImage}
+              src={imageUrl || flowerImage}
               alt={currentPlant.name}
               style={{
                 width: "100%",
