@@ -200,7 +200,6 @@ const PlantsSwipePage: React.FC = () => {
           </div>
         </>
       )}
-      ;
     </div>
   );
 };

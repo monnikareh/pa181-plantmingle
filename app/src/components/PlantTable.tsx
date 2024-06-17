@@ -38,7 +38,7 @@ const PlantTable: React.FC<any> = ({ data }) => {
               >
                 <TableCell>{plant.id}</TableCell>
                 <TableCell>{plant.name}</TableCell>
-                <TableCell>{plant.description}</TableCell>
+                <TableCell><p style={{WebkitLineClamp: 4, WebkitBoxOrient: "vertical", overflow: "hidden", display: "-webkit-box"}}>{plant.description}</p></TableCell>
               </TableRow>
             ))
           ) : (
