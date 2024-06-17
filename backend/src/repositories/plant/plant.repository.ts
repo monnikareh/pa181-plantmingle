@@ -1,28 +1,28 @@
-import { Plant } from '../../entities/Plant';
-import { plants } from '../../mockData/plants';
-import { PlantCreate, PlantUpdate } from "./plant.types";
+import { PrismaClient, Plant } from '@prisma/client';
+import prisma from '../../../client';
+import { PlantCreate, PlantUpdate } from './plant.types';
 import { Result } from '@badrap/result';
-import {PlantError} from "./plant.errors";
-import {users} from "../../mockData/users";
+import { PlantError } from './plant.errors';
 
 class PlantRepository {
-    private plants: Plant[];
+    private prisma: PrismaClient;
 
-    constructor() {
-        this.plants = plants;
+    constructor(prisma: PrismaClient) {
+        this.prisma = prisma;
     }
 
-    getAllPlants(): Result<Plant[]> {
+    async getAllPlants(): Promise<Result<Plant[]>> {
         try {
-            return Result.ok(this.plants);
+            const plants = await this.prisma.plant.findMany();
+            return Result.ok(plants);
         } catch (error) {
             return Result.err(PlantError.DatabaseReadError('Failed to get all plants.'));
         }
     }
 
-    getPlantById(id: number): Result<Plant | undefined> {
+    async getPlantById(id: number): Promise<Result<Plant | null>> {
         try {
-            const plant = this.plants.find(plant => plant.id === id);
+            const plant = await this.prisma.plant.findUnique({ where: { id } });
             if (!plant) {
                 return Result.err(PlantError.DatabaseReadError('Failed to get the plant.'));
             }
@@ -32,73 +32,78 @@ class PlantRepository {
         }
     }
 
-    createPlant(plant: PlantCreate): Result<Plant> {
+    async createPlant(plant: PlantCreate): Promise<Result<Plant>> {
         try {
-            const newPlant = { ...plant, id: this.plants.length + 1, created_at: new Date(), updated_at: new Date() };
-            this.plants.push(newPlant);
+            const newPlant = await this.prisma.plant.create({
+                data: {
+                    ...plant,
+                    created_at: new Date(),
+                    updated_at: new Date(),
+                },
+            });
             return Result.ok(newPlant);
         } catch (error) {
             return Result.err(PlantError.DatabaseCreateError('Failed to create the plant.'));
         }
     }
 
-    updatePlant(id: number, updatedPlant: PlantUpdate): Result<Plant | null> {
+    async updatePlant(id: number, updatedPlant: PlantUpdate): Promise<Result<Plant | null>> {
         try {
-            const plantIndex = this.plants.findIndex(plant => plant.id === id);
-            if (plantIndex === -1) {
-                return Result.err(PlantError.DatabaseUpdateError('Plant not found.'));
-            }
-            const plant = this.plants[plantIndex];
-            this.plants[plantIndex] = { ...plant, ...updatedPlant, updated_at: new Date() };
-            return Result.ok(this.plants[plantIndex]);
+            const plant = await this.prisma.plant.update({
+                where: { id },
+                data: {
+                    ...updatedPlant,
+                    updated_at: new Date(),
+                },
+            });
+            return Result.ok(plant);
         } catch (error) {
             return Result.err(PlantError.DatabaseUpdateError('Failed to update the plant.'));
         }
     }
 
-    deletePlant(id: number): Result<boolean> {
+    async deletePlant(id: number): Promise<Result<boolean>> {
         try {
-            const plantIndex = this.plants.findIndex(plant => plant.id === id);
-            if (plantIndex === -1) {
-                return Result.err(PlantError.DatabaseDeleteError('Plant not found.'));
-            }
-            this.plants.splice(plantIndex, 1);
+            await this.prisma.plant.delete({ where: { id } });
             return Result.ok(true);
         } catch (error) {
             return Result.err(PlantError.DatabaseDeleteError('Failed to delete the plant.'));
         }
     }
 
-    readPlantsPaginated(page: number, pageSize: number): Result<Plant[]> {
+    async readPlantsPaginated(page: number, pageSize: number): Promise<Result<Plant[]>> {
         try {
-            const offset = (page - 1) * pageSize;
-            const paginatedPlants = this.plants.slice(offset, offset + pageSize);
-            return Result.ok(paginatedPlants);
+            const plants = await this.prisma.plant.findMany({
+                skip: (page - 1) * pageSize,
+                take: pageSize,
+            });
+            return Result.ok(plants);
         } catch (error) {
-            return Result.err(PlantError.DatabaseReadError('Failed to get all plants.'));
+            return Result.err(PlantError.DatabaseReadError('Failed to get paginated plants.'));
         }
     }
 
-    getPages(pageSize: number): Result<number> {
+    async getPages(pageSize: number): Promise<Result<number>> {
         try {
-            const totalPages = Math.ceil(this.plants.length / pageSize);
+            const count = await this.prisma.plant.count();
+            const totalPages = Math.ceil(count / pageSize);
             return Result.ok(totalPages);
         } catch (error) {
-            return Result.err(PlantError.DatabaseReadError('Failed to count'));
+            return Result.err(PlantError.DatabaseReadError('Failed to count pages.'));
         }
     }
 
-    getUserEmailById(userId: number): Result<string | undefined> {
+    async getUserEmailById(userId: number): Promise<Result<string | null>> {
         try {
-            const userData = users.find(user => user.id === userId);
-            if (!userData) {
+            const user = await this.prisma.user.findUnique({ where: { id: userId } });
+            if (!user) {
                 return Result.err(PlantError.DatabaseReadError('User for the plant not found.'));
             }
-            return Result.ok(userData.email);
+            return Result.ok(user.email);
         } catch (error) {
             return Result.err(PlantError.DatabaseReadError('User for the plant not found.'));
         }
     }
 }
 
-export const plantRepository = new PlantRepository();
+export const plantRepository = new PlantRepository(prisma);
