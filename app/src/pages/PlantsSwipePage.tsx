@@ -49,8 +49,8 @@ const PlantsSwipePage: React.FC = () => {
     navigate(`/swipe/${nextPlant.id}`);
   };
 
-  const handleMatch = () => {
-    navigate("/match");
+  const handleMatch = (id: number) => {
+    navigate(`/match/${id}`);
   };
 
   const onSwipe = ({ deltaX, deltaY }: { deltaX: number; deltaY: number }) => {
@@ -58,7 +58,7 @@ const PlantsSwipePage: React.FC = () => {
       if (deltaX > 0) {
         handleNextPlant();
       } else {
-        handleMatch();
+        handleMatch(currentPlant.ownerId);
       }
     }
   };
@@ -114,7 +114,7 @@ const PlantsSwipePage: React.FC = () => {
           <Button variant="contained" color="primary" onClick={handleNextPlant}>
             <ArrowBackIcon />
           </Button>
-          <Button variant="contained" color="primary" onClick={handleMatch}>
+          <Button variant="contained" color="primary" onClick={() => handleMatch(currentPlant.ownerId)}>
             <ArrowForwardIcon />
           </Button>
         </Box>

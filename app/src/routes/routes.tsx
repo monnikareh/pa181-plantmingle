@@ -23,7 +23,7 @@ const mainLayoutRoutes: RouteObject[] = [
     element: <PlantsSwipePage />,
   },
   {
-    path: 'match',
+    path: 'match/:id',
     element: <MatchPage />,
   },
   {
