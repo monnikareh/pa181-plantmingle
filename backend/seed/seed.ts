@@ -6,14 +6,18 @@ const prisma = new PrismaClient();
 async function main() {
     console.log('Start seeding...');
 
-    // Seed Plants
+    for (const user of users) {
+        await prisma.user.create({
+            data: user,
+        });
+    }
+
     for (const plant of plants) {
         await prisma.plant.create({
             data: plant,
         });
     }
 
-    // Seed Matches
     for (const match of matches) {
         await prisma.match.create({
             data: match,
