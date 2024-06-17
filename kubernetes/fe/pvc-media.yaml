@@ -1,11 +1,11 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: plantmingle-nginx-pvc
+  name: plantmingle-fe-pvc-media
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 2Gi
+      storage: 5Gi
   storageClassName: nfs-csi

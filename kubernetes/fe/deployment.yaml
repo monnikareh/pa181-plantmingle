@@ -31,6 +31,8 @@ spec:
         volumeMounts:
           - mountPath: /var/cache/nginx
             name: nginxvol
+          - mountPath: /var/www/media
+            name: mediavol
         resources:
           requests:
             memory: "1Gi"
@@ -44,4 +46,7 @@ spec:
       volumes:
         - name: nginxvol
           persistentVolumeClaim:
-            claimName: plantmingle-nginx-pvc
+            claimName: plantmingle-fe-pvc-nginx
+        - name: mediavol
+          persistentVolumeClaim:
+            claimName: plantmingle-fe-pvc-media
