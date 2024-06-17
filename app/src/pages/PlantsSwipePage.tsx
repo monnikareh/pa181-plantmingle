@@ -84,9 +84,9 @@ const PlantsSwipePage: React.FC = () => {
   const onSwipe = ({ deltaX, deltaY }: { deltaX: number; deltaY: number }) => {
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
       if (deltaX > 0) {
-        handleNextPlant();
-      } else {
         handleMatch(currentPlant.ownerId);
+      } else {
+        handleNextPlant();
       }
     }
   };
@@ -139,10 +139,10 @@ const PlantsSwipePage: React.FC = () => {
             paddingBottom: "24px",
           }}
         >
-          <Button variant="contained" color="primary" onClick={handleNextPlant}>
+          <Button variant="contained" color="primary" onClick={() => handleMatch(currentPlant.ownerId)}>
             <ArrowBackIcon />
           </Button>
-          <Button variant="contained" color="primary" onClick={() => handleMatch(currentPlant.ownerId)}>
+          <Button variant="contained" color="primary" onClick={handleNextPlant}>
             <ArrowForwardIcon />
           </Button>
         </Box>
