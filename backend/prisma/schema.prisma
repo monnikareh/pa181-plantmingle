@@ -1,0 +1,50 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                Int      @id @default(autoincrement())
+  username          String   @unique
+  email             String   @unique
+  password          String
+  location          String
+  bio               String
+  profilePictureUrl String
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+  plants            Plant[]
+  matchesAsUser1    Match[]  @relation("matches_user1")
+  matchesAsUser2    Match[]  @relation("matches_user2")
+}
+
+model Plant {
+  id               Int      @id @default(autoincrement())
+  name             String
+  description      String?
+  careInstructions String?
+  photoUrl         String
+  ownerId          Int
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+  owner            User     @relation(fields: [ownerId], references: [id])
+  matchesAsPlant1  Match[]  @relation("matches_plant1")
+  matchesAsPlant2  Match[]  @relation("matches_plant2")
+}
+
+model Match {
+  id         Int      @id @default(autoincrement())
+  userId1    Int
+  userId2    Int
+  plantId1   Int
+  plantId2   Int
+  matched_at DateTime @default(now())
+  user1      User     @relation("matches_user1", fields: [userId1], references: [id])
+  user2      User     @relation("matches_user2", fields: [userId2], references: [id])
+  plant1     Plant    @relation("matches_plant1", fields: [plantId1], references: [id])
+  plant2     Plant    @relation("matches_plant2", fields: [plantId2], references: [id])
+}
