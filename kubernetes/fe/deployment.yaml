@@ -40,7 +40,7 @@ spec:
             cpu: "2"
         env:
           - name: VITE_BACKEND_BASE_URL
-            value: https://plantmingle-api.dyn.cloud.e-infra.cz
+            value: https://api.plantmingle.dyn.cloud.e-infra.cz
       volumes:
         - name: nginxvol
           persistentVolumeClaim:

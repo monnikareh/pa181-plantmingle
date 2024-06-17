@@ -16,10 +16,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - "plantmingle-api.dyn.cloud.e-infra.cz"
+        - "api.plantmingle.dyn.cloud.e-infra.cz"
       secretName: plantmingle-be-dyn-cloud-e-infra-cz-tls
   rules:
-  - host: "plantmingle-api.dyn.cloud.e-infra.cz"
+  - host: "api.plantmingle.dyn.cloud.e-infra.cz"
     http:
       paths:
       - path: /
