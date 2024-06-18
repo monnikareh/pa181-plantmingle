@@ -117,21 +117,21 @@ const PlantsSwipePage: React.FC = () => {
               alt={currentPlant.name}
               style={{
                 width: "100%",
-                maxWidth: "300px",
+                maxWidth: "500px",
                 objectFit: "contain",
-                maxHeight: isSmUp ? "" : "150px",
+                maxHeight: isSmUp ? "" : "250px",
               }}
             />
           </Box>
           <Box>
-            <Typography variant="h4">{currentPlant.name}</Typography>
-            <Typography variant="body1" marginTop={2}>
+            <Typography variant="h5">{currentPlant.name}</Typography>
+            <Typography variant="body2" marginTop={2}>
               {currentPlant.description}
             </Typography>
             <Typography variant="h6" marginTop={4}>
               Care Instructions
             </Typography>
-            <Typography variant="body1" marginTop={1}>
+            <Typography variant="body2" marginTop={1}>
               {currentPlant.careInstructions}
             </Typography>
           </Box>
