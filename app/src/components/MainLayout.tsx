@@ -18,7 +18,7 @@ const MainLayout: React.FC = () => {
                 paddingTop: '24px',
                 overflow: 'auto'
             }}>
-                <Container style={{ height: '100%' }}>
+                <Container style={{ height: '100%'}}>
                     <Outlet />
                 </Container>
             </div>

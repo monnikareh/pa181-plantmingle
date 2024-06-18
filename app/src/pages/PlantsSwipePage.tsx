@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowCircleRight from "@mui/icons-material/ArrowCircleRight";
+import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import { useAllPlants } from "../hooks/usePlants";
 import { useNavigate, useParams } from "react-router-dom";
 import flowerImage from "../assets/flower.png";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MobileSwiper from "../components/MobileSwiper";
-import {storage} from "../firestore";
-import {
-  getDownloadURL,
-  ref,
-} from 'firebase/storage';
+import { storage } from "../firestore";
+import { getDownloadURL, ref } from "firebase/storage";
 
 const PlantsSwipePage: React.FC = () => {
   const { data: plantsResp, isFetching } = useAllPlants();
@@ -94,7 +96,14 @@ const PlantsSwipePage: React.FC = () => {
   const currentPlant = plantsResp[currentPlantIndex];
 
   return (
-    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        position: "relative",
+      }}
+    >
       <MobileSwiper onSwipe={onSwipe}>
         <Box
           display="grid"
@@ -128,7 +137,6 @@ const PlantsSwipePage: React.FC = () => {
           </Box>
         </Box>
       </MobileSwiper>
-
       {isTouchDevice ? null : (
         <Box
           style={{
@@ -136,16 +144,61 @@ const PlantsSwipePage: React.FC = () => {
             justifyContent: "space-between",
             flexShrink: 0,
             marginTop: "auto",
-            paddingBottom: "24px",
+            paddingBottom: "50px",
           }}
         >
-          <Button variant="contained" color="primary" onClick={() => handleMatch(currentPlant.ownerId)}>
-            <ArrowBackIcon />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleMatch(currentPlant.ownerId)}
+          >
+            LOVE IT
+            <FavoriteIcon />
+            <FavoriteBorder />
           </Button>
           <Button variant="contained" color="primary" onClick={handleNextPlant}>
+            NEXT
             <ArrowForwardIcon />
+            <ArrowForwardIos />
+            <ArrowCircleRight />
           </Button>
         </Box>
+      )}
+      {isTouchDevice ? null : (
+        <>
+          <div
+            onClick={() => handleMatch(currentPlant.ownerId)}
+            style={{
+              position: "absolute",
+              left: "-24px",
+              right: "50%",
+              top: "-24px",
+              bottom: 0,
+              display: "flex",
+              alignItems: "center",
+              background: "transparent",
+            }}
+          >
+            <ArrowBackIos />
+          </div>
+
+          <div
+            onClick={handleNextPlant}
+            style={{
+              position: "absolute",
+              right: "-24px",
+              left: "50%",
+              top: "-24px",
+              bottom: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              background: "transparent",
+            }}
+          >
+            <ArrowForwardIos />
+          </div>
+        </>
       )}
     </div>
   );
