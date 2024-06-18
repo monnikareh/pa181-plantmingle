@@ -1,15 +1,9 @@
 import { z } from 'zod';
 
-export const getAllPlantsSchema = z.object({
-    query: z.object({
-        page: z.coerce.number().optional(),
-    })
-});
-
 export const PlantCreateSchema = z.object({
     name: z.string(),
-    description: z.string().optional(),
-    careInstructions: z.string().optional(),
+    description: z.string(),
+    careInstructions: z.string(),
     photoUrl: z.string().url(),
     ownerId: z.number()
 });

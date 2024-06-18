@@ -1,7 +1,6 @@
 import type { Request, Response } from 'express';
-import {ZodSchema, ZodTypeDef} from "zod";
-import {fromZodError} from "zod-validation-error";
-
+import { ZodSchema, ZodTypeDef } from "zod";
+import { fromZodError } from "zod-validation-error";
 
 export const parseRequest = async <
     Output,
@@ -11,19 +10,18 @@ export const parseRequest = async <
     schema: ZodSchema<Output, Def, Input>,
     req: Request,
     res: Response,
-) => {
-    const parsedRequest = await schema.safeParseAsync(req);
+): Promise<{ body: Output } | null> => {
+    const parsedRequest = await schema.safeParseAsync(req.body);
 
     if (!parsedRequest.success) {
         const error = fromZodError(parsedRequest.error);
         const errorResponse: Error = {
             name: 'ValidationError',
             message: error.message
-            //   cause: error.cause,
         };
         res.status(400).send(errorResponse);
         return null;
     }
 
-    return parsedRequest.data;
+    return { body: parsedRequest.data };
 };

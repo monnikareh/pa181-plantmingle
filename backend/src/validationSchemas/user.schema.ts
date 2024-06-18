@@ -1,16 +1,16 @@
 import { object, string, Schema } from 'zod';
-import {UserCreate, UserUpdate} from "../repositories/user/user.types";
+import {UserCreateData, UserUpdateData} from "../repositories/user/user.types";
 
-export const UserCreateSchema: Schema<UserCreate> = object({
+export const UserCreateSchema: Schema<UserCreateData> = object({
     username: string().min(3).max(50),
     email: string().email(),
     password: string().min(6),
     location: string(),
-    bio: string().optional(),
+    bio: string(),
     profilePictureUrl: string().url(),
 });
 
-export const UserUpdateSchema: Schema<Partial<UserUpdate>> = object({
+export const UserUpdateSchema: Schema<Partial<UserUpdateData>> = object({
     username: string().min(3).max(50).optional(),
     email: string().email().optional(),
     password: string().min(6).optional(),

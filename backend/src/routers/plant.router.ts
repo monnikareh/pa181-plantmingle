@@ -7,12 +7,12 @@ import {
     deletePlant
 } from '../controllers/plant.controller';
 
-const router = Router();
+const plantRouter = Router();
 
-router.get('/', getAllPlants);
-router.get('/:id', getPlantById);
-router.post('/', createPlant);
-router.put('/:id', updatePlant);
-router.delete('/:id', deletePlant);
+plantRouter.get('/', getAllPlants);
+plantRouter.get('/:id', getPlantById);
+plantRouter.post('/', createPlant);
+plantRouter.put('/:id', updatePlant);
+plantRouter.delete('/:id', deletePlant);
 
-export default router;
+export default plantRouter;

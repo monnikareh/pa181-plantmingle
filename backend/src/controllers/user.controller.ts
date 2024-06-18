@@ -1,16 +1,22 @@
 import { Request, Response } from 'express';
-import { userRepository } from '../repositories/user/user.repository';
 import { UserCreateSchema, UserUpdateSchema } from '../validationSchemas/user.schema';
 import { parseRequest } from '../utils';
+import {
+    deleteDeleteUser,
+    findManyUsers,
+    findUserById,
+    postCreateUser,
+    putUpdateUser
+} from "../repositories/user/user.repository";
 
-export const getAllUsers = (req: Request, res: Response) => {
-    const users = userRepository.getAllUsers();
+export const getAllUsers = async (req: Request, res: Response) => {
+    const users = await findManyUsers();
     res.json(users);
 };
 
-export const getUserById = (req: Request, res: Response) => {
+export const getUserById = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id, 10);
-    const user = userRepository.getUserById(id);
+    const user = await findUserById(id);
     if (!user) {
         return res.status(404).send('User not found');
     }
@@ -21,7 +27,7 @@ export const createUser = async (req: Request, res: Response) => {
     const newUser = await parseRequest(UserCreateSchema, req, res);
     if (!newUser) return;
 
-    const createdUser = userRepository.createUser(newUser);
+    const createdUser = await postCreateUser(newUser.body);
     res.status(201).json(createdUser);
 };
 
@@ -30,7 +36,7 @@ export const updateUser = async (req: Request, res: Response) => {
     const updatedUser = await parseRequest(UserUpdateSchema, req, res);
     if (!updatedUser) return;
 
-    const user = userRepository.updateUser(id, updatedUser);
+    const user = await putUpdateUser(id, updatedUser.body);
     if (!user) {
         return res.status(404).send('User not found');
     }
@@ -39,7 +45,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
 export const deleteUser = (req: Request, res: Response) => {
     const id = parseInt(req.params.id, 10);
-    const success = userRepository.deleteUser(id);
+    const success = deleteDeleteUser(id);
     if (!success) {
         return res.status(404).send('User not found');
     }
