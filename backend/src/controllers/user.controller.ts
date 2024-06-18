@@ -11,7 +11,10 @@ import {
 
 export const getAllUsers = async (req: Request, res: Response) => {
     const users = await findManyUsers();
-    res.json(users);
+    if (users.isErr) {
+        return res.status(500).json(users.error);
+    }
+    res.json(users.value);
 };
 
 export const getUserById = async (req: Request, res: Response) => {
