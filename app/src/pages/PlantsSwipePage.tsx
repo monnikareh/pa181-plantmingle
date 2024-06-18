@@ -124,14 +124,14 @@ const PlantsSwipePage: React.FC = () => {
             />
           </Box>
           <Box>
-            <Typography variant="h5">{currentPlant.name}</Typography>
-            <Typography variant="body2" marginTop={2}>
+            <Typography variant={isTouchDevice? 'h6' : 'h4'}>{currentPlant.name}</Typography>
+            <Typography variant={isTouchDevice? 'body2' : 'body1'} marginTop={2}>
               {currentPlant.description}
             </Typography>
             <Typography variant="h6" marginTop={4}>
               Care Instructions
             </Typography>
-            <Typography variant="body2" marginTop={1}>
+            <Typography variant={isTouchDevice? 'body2' : 'body1'} marginTop={1}>
               {currentPlant.careInstructions}
             </Typography>
           </Box>
