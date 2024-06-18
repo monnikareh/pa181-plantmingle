@@ -22,7 +22,7 @@ const PlantTable: React.FC<any> = ({ data }) => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
+            {/* <TableCell>ID</TableCell> */}
             <TableCell>Name</TableCell>
             <TableCell>Description</TableCell>
           </TableRow>
@@ -36,8 +36,8 @@ const PlantTable: React.FC<any> = ({ data }) => {
                 style={{ cursor: "pointer" }}
                 onClick={() => onRowClick(plant.id)}
               >
-                <TableCell>{plant.id}</TableCell>
-                <TableCell>{plant.name}</TableCell>
+                {/* <TableCell>{plant.id}</TableCell> */}
+                <TableCell style={{ fontWeight: 500 }}>{plant.name}</TableCell>
                 <TableCell><p style={{WebkitLineClamp: 4, WebkitBoxOrient: "vertical", overflow: "hidden", display: "-webkit-box"}}>{plant.description}</p></TableCell>
               </TableRow>
             ))
