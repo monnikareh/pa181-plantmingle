@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -63,6 +63,22 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.swipe-button:hover svg {
+  transform: scale(1.5);
+}
+
+.swipe-button:hover .arrowback {
+  opacity: 0;
+}
+
+.swipe-button .favorite {
+  opacity: 0;
+}
+
+.swipe-button:hover .favorite {
+  opacity: 1;
 }
 
 @media (prefers-color-scheme: light) {

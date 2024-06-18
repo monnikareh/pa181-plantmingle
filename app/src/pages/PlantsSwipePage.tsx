@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
-// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import ArrowCircleRight from "@mui/icons-material/ArrowCircleRight";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import { useAllPlants } from "../hooks/usePlants";
 import { useNavigate, useParams } from "react-router-dom";
-import flowerImage from "../assets/flower.png";
+// import flowerImage from "../assets/flower.png";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MobileSwiper from "../components/MobileSwiper";
@@ -113,7 +109,8 @@ const PlantsSwipePage: React.FC = () => {
         >
           <Box textAlign="center">
             <img
-              src={imageUrl || flowerImage}
+              // src={imageUrl || flowerImage}
+              src={imageUrl || undefined}
               alt={currentPlant.name}
               style={{
                 width: "100%",
@@ -124,46 +121,28 @@ const PlantsSwipePage: React.FC = () => {
             />
           </Box>
           <Box>
-            <Typography variant={isTouchDevice? 'h6' : 'h4'}>{currentPlant.name}</Typography>
-            <Typography variant={isTouchDevice? 'body2' : 'body1'} marginTop={2}>
+            <Typography variant={isTouchDevice ? "h6" : "h4"}>
+              {currentPlant.name}
+            </Typography>
+            <Typography
+              variant={isTouchDevice ? "body2" : "body1"}
+              marginTop={2}
+            >
               {currentPlant.description}
             </Typography>
             <Typography variant="h6" marginTop={4}>
               Care Instructions
             </Typography>
-            <Typography variant={isTouchDevice? 'body2' : 'body1'} marginTop={1}>
+            <Typography
+              variant={isTouchDevice ? "body2" : "body1"}
+              marginTop={1}
+            >
               {currentPlant.careInstructions}
             </Typography>
           </Box>
         </Box>
       </MobileSwiper>
-      {isTouchDevice ? null : (
-        <Box
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            flexShrink: 0,
-            marginTop: "auto",
-            paddingBottom: "50px",
-          }}
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleMatch(currentPlant.ownerId)}
-          >
-            LOVE IT
-            <FavoriteIcon />
-            <FavoriteBorder />
-          </Button>
-          <Button variant="contained" color="primary" onClick={handleNextPlant}>
-            NEXT
-            <ArrowForwardIcon />
-            <ArrowForwardIos />
-            <ArrowCircleRight />
-          </Button>
-        </Box>
-      )}
+
       {isTouchDevice ? null : (
         <>
           <div
@@ -171,15 +150,37 @@ const PlantsSwipePage: React.FC = () => {
             style={{
               position: "absolute",
               left: "-24px",
-              right: "50%",
+              right: "70%",
               top: "-24px",
               bottom: 0,
               display: "flex",
               alignItems: "center",
               background: "transparent",
             }}
+            className="swipe-button"
           >
-            <ArrowBackIos />
+            <ArrowBackIos
+              className="arrowback"
+              sx={{
+                height: "40px",
+                width: "40px",
+                position: "absolute",
+                cursor: "pointer",
+                color: "green",
+                transition: "opacity 1s ease-in-out",
+              }}
+            />
+            <FavoriteIcon
+              className="favorite"
+              sx={{
+                height: "40px",
+                width: "40px",
+                position: "absolute",
+                cursor: "pointer",
+                color: "green",
+                transition: "opacity 1s ease-in-out",
+              }}
+            />
           </div>
 
           <div
@@ -187,7 +188,7 @@ const PlantsSwipePage: React.FC = () => {
             style={{
               position: "absolute",
               right: "-24px",
-              left: "50%",
+              left: "70%",
               top: "-24px",
               bottom: 0,
               display: "flex",
@@ -195,8 +196,18 @@ const PlantsSwipePage: React.FC = () => {
               justifyContent: "flex-end",
               background: "transparent",
             }}
+            className="swipe-button"
           >
-            <ArrowForwardIos />
+            <ArrowForwardIos
+              sx={{
+                height: "40px",
+                width: "40px",
+                cursor: "pointer",
+                transition: "transform 0.3s ease, opacity 1s ease-in-out",
+                color: "green",
+                ":hover": { opacity: 1 },
+              }}
+            />
           </div>
         </>
       )}
