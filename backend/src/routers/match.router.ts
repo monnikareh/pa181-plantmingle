@@ -1,8 +1,9 @@
 import express from 'express';
-import { createMatch, getMatchById } from '../controllers/match.controller';
+import {createMatch, getAllMatches, getMatchById} from '../controllers/match.controller';
 
 const matchRouter = express.Router();
 
+matchRouter.get('/', getAllMatches);
 matchRouter.post('/', createMatch);
 matchRouter.get('/:id', getMatchById);
 
